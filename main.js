@@ -17,22 +17,24 @@ submitBook.addEventListener('click', e=>{
 });
 
 
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-Book.prototype.toggleRead = function(){
-    if(this.read == true){
-        this.read = false;
-    }else{
-        this.read = true;
+class Book{
+    constructor(title,author,pages,read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
     }
-    while(bookContainer.hasChildNodes()){
-        bookContainer.removeChild(bookContainer.firstChild);
+    toggleRead(){
+        if(this.read == true){
+            this.read = false;
+        }else{
+            this.read = true;
+        }
+        while(bookContainer.hasChildNodes()){
+            bookContainer.removeChild(bookContainer.firstChild);
+        }
+        render(myLibrary);
     }
-    render(myLibrary);
 }
 
 
