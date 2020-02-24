@@ -3,6 +3,9 @@ let submitBook = document.querySelector('#submit-book');
 const form = document.querySelector('.form');
 const bookContainer = document.querySelector('.card-container');
 const showForm = document.querySelector('#toggle-form');
+
+
+
 showForm.addEventListener('click', e=>{
     form.classList.remove('invisible');
 });
@@ -14,6 +17,7 @@ submitBook.addEventListener('click', e=>{
     let bookRead = document.querySelector('#book-read').checked;
     let book = new Book(bookTitle, bookAuthor, bookPages, bookRead);
     addBookToLibrary(book);
+    console.log(localStorage.getItem(0));
 });
 
 
@@ -24,18 +28,19 @@ class Book{
         this.pages = pages;
         this.read = read;
     }
-    toggleRead(){
-        if(this.read == true){
-            this.read = false;
-        }else{
-            this.read = true;
-        }
-        while(bookContainer.hasChildNodes()){
-            bookContainer.removeChild(bookContainer.firstChild);
-        }
-        render(myLibrary);
-    }
+    
 }
+Book.prototype.toggleRead = function(){
+    if(this.read == true){
+        this.read = false;
+    }else{
+        this.read = true;
+    }
+    while(bookContainer.hasChildNodes()){
+        bookContainer.removeChild(bookContainer.firstChild);
+    }
+    render(myLibrary);
+};
 
 
 function addBookToLibrary(book){
@@ -44,6 +49,7 @@ function addBookToLibrary(book){
         bookContainer.removeChild(bookContainer.firstChild);
     }
     render(myLibrary);
+    storeBooks();
 }
 
 function render(array){
@@ -76,6 +82,14 @@ function render(array){
         deleteMovie.addEventListener('click',e=>{
             bookContainer.removeChild(card);
             myLibrary.splice(index,1);
+            storeBooks();
         });
     });
+}
+function storeBooks(){
+    let i = 0;
+    for(let book in myLibrary){
+        localStorage.setItem(`${i}`, book);
+        i++;
+    }
 }
