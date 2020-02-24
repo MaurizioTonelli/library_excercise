@@ -1,95 +1,46 @@
-let myLibrary = [];
-let submitBook = document.querySelector('#submit-book');
-const form = document.querySelector('.form');
-const bookContainer = document.querySelector('.card-container');
-const showForm = document.querySelector('#toggle-form');
-
-
-
-showForm.addEventListener('click', e=>{
-    form.classList.remove('invisible');
-});
-render(myLibrary);
-submitBook.addEventListener('click', e=>{
-    let bookTitle = document.querySelector('#book-title').value;
-    let bookAuthor = document.querySelector('#book-author').value;
-    let bookPages = document.querySelector('#book-pages').value;
-    let bookRead = document.querySelector('#book-read').checked;
-    let book = new Book(bookTitle, bookAuthor, bookPages, bookRead);
-    addBookToLibrary(book);
-    console.log(localStorage.getItem(0));
-});
-
-
 class Book{
-    constructor(title,author,pages,read){
+    constructor(title,author,isbn){
         this.title = title;
         this.author = author;
-        this.pages = pages;
-        this.read = read;
+        this.isbn = isbn;
     }
-    
 }
-Book.prototype.toggleRead = function(){
-    if(this.read == true){
-        this.read = false;
-    }else{
-        this.read = true;
+class UI{
+    static displayBooks(){
+        const array = [
+            {
+                title:"skldjf",
+                author: "anitold",
+                isbn: 12323,
+            },
+            {
+                title:"asd",
+                author: "anitdddddold",
+                isbn: 1232123,
+            },
+        ];
+        let books = array;
+        books.forEach((book)=>{
+            UI.addBookToList(book);
+        })
     }
-    while(bookContainer.hasChildNodes()){
-        bookContainer.removeChild(bookContainer.firstChild);
+    static addBookToList(book) {
+        const list = document.querySelector('#book-list');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${book.title}</td>
+            <td>${book.author}</td>
+            <td>${book.isbn}</td>
+            <td><a class = "btn btn-danger btn-sm delete">X</a></td>
+        `;
+        list.appendChild(row);
     }
-    render(myLibrary);
-};
+}
+class Store{
 
+}
+//Display Books
+document.addEventListener('DOMContentLoaded',UI.displayBooks);
+//Create Books
 
-function addBookToLibrary(book){
-    myLibrary.push(book);
-    while(bookContainer.hasChildNodes()){
-        bookContainer.removeChild(bookContainer.firstChild);
-    }
-    render(myLibrary);
-    storeBooks();
-}
-
-function render(array){
-    array.forEach((element,index) => {
-        let card = document.createElement('div');
-        card.setAttribute('data-key', `${index}`);
-        let title = document.createElement('p');
-        title.textContent = element.title;
-        let author = document.createElement('p');
-        author.textContent = element.author;
-        let pages = document.createElement('p');
-        pages.textContent = element.pages;
-        let read = document.createElement('button');
-        if(element.read == true){
-            read.textContent = "read";
-        }else{
-            read.textContent = "not read";
-        }
-        read.addEventListener('click', e=>{
-            element.toggleRead();
-        });
-        let deleteMovie = document.createElement('button');
-        deleteMovie.textContent = 'Delete';
-        card.appendChild(title);
-        card.appendChild(author);
-        card.appendChild(pages);
-        card.appendChild(read);
-        card.appendChild(deleteMovie);
-        bookContainer.appendChild(card);
-        deleteMovie.addEventListener('click',e=>{
-            bookContainer.removeChild(card);
-            myLibrary.splice(index,1);
-            storeBooks();
-        });
-    });
-}
-function storeBooks(){
-    let i = 0;
-    for(let book in myLibrary){
-        localStorage.setItem(`${i}`, book);
-        i++;
-    }
-}
+//Delete Books
