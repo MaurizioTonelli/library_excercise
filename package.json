@@ -1,0 +1,23 @@
+{
+  "name": "library_excercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaurizioTonelli/library_excercise.git"
+  },
+  "author": "Maurizio Tonelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaurizioTonelli/library_excercise/issues"
+  },
+  "homepage": "https://github.com/MaurizioTonelli/library_excercise#readme",
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
